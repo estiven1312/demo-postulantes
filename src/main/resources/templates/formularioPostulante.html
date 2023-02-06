@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Postulante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Formulario de postulantes</h1>
+    <h2>En este formulario llene los campos del estudiante</h2>
+    <div class="container">
+        <div>
+            <img th:if="${#strings.length(postulante.foto)>0}" class="img-thumbnail rounded float-left" style="max-width: 25%" th:src="@{'/uploads/' + ${postulante.foto}}" th:alt="${postulante.foto}">
+        </div>
+        <form th:action="@{/postulante/form}" th:object="${postulante}" method="post" enctype="multipart/form-data">
+            <input  th:field="*{id}" type="hidden">
+            <input  th:field="*{fechaInscripcion}" type="hidden">
+            <input  th:field="*{foto}" type="hidden">
+            <div class="form-group row my-3">
+                <label  class="col-sm-2" for="nombrepostulante">Nombre postulante</label>
+                <input class="form-control col-sm-6" id="nombrepostulante" th:field="*{nombres}" type="text" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('nombres')}" th:errors="*{nombres}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label  class="col-sm-2" for="apellidopostulante" >Apellido postulante</label>
+                <input class="form-control" id="apellidopostulante" type="text" th:field="*{apellidos}" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label  class="col-sm-2" for="telefonopostulante" >Telefono postulante</label>
+                <input class="form-control" id="telefonopostulante" type="text" th:field="*{telefono}" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label  class="col-sm-2" for="correopostulante" >Correo postulante</label>
+                <input class="form-control" id="correopostulante" type="text" th:field="*{correo}" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label  class="col-sm-2" for="dnipostulante" >DNI postulante</label>
+                <input class="form-control" id="dnipostulante" type="text" th:field="*{dni}" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label class="col-sm-2" for="direccionpostulante" >Direccion postulante</label >
+                <input class="form-control" id="direccionpostulante" type="text" th:field="*{direccion}" th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <select th:field="*{idColegio}" class="form-select col-sm-2" aria-label="Seleccione su colegio" th:errorclass="'form-control alert-danger'">
+                    <option th:each="colegio : ${colegios}" th:value="${colegio.id}" th:text="${colegio.nombre}"></option>
+                </select>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('idColegio')}" th:errors="*{idColegio}" ></small>
+            </div>
+            <div class="form-group row my-3">
+                <label class="col-sm-2"  for="file">Foto</label>
+                <input type="file" name="file" id="file" class="form-control">
+            </div>
+            <div>
+                <input type="submit"  class="btn btn-primary" value="Registrarse">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
