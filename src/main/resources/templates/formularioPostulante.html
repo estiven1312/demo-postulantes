@@ -11,7 +11,7 @@
     <h2>En este formulario llene los campos del estudiante</h2>
     <div class="container">
         <div>
-            <img th:if="${#strings.length(postulante.foto)>0}" class="img-thumbnail rounded float-left" style="max-width: 25%" th:src="@{'/uploads/' + ${postulante.foto}}" th:alt="${postulante.foto}">
+            <img th:if="${postulante.foto != null}" class="img-thumbnail rounded float-left" style="max-width: 25%" th:src="@{'/uploads/' + ${postulante.foto}}" th:alt="${postulante.foto}">
         </div>
         <form th:action="@{/postulante/form}" th:object="${postulante}" method="post" enctype="multipart/form-data">
             <input  th:field="*{id}" type="hidden">
