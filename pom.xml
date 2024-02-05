@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>proyecto-postulantes</name>
     <description>proyecto-postulantes</description>
+    <packaging>war</packaging>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -72,6 +73,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>Postulantes</finalName>
     </build>
 
 </project>

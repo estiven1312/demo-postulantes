@@ -8,6 +8,7 @@ import com.example.proyectopostulantes.model.dto.PostulanteDTO;
 import com.example.proyectopostulantes.repository.ColegioRepository;
 import com.example.proyectopostulantes.repository.EstadoRepository;
 import com.example.proyectopostulantes.repository.PostulanteRepository;
+import com.example.proyectopostulantes.repository.dao.PostulanteDao;
 import com.example.proyectopostulantes.service.PostulanteService;
 import com.example.proyectopostulantes.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IPostulanteService implements PostulanteService {
 
     @Autowired
     PostulanteRepository postulanteRepository;
+    @Autowired
+    PostulanteDao postulanteDao;
     @Autowired
     EstadoRepository estadoRepository;
 
@@ -68,7 +70,12 @@ public class IPostulanteService implements PostulanteService {
         List<PostulanteDTO> postulanteDTOS = postulanteRepository.findAllActivos(EstadoEnum.ACTIVO.name()).stream().map(PostulanteDTO::new).toList();
         return postulanteDTOS;
     }
+    @Override
+    public List<PostulanteDTO> listarPostulantes(String params) {
 
+        List<PostulanteDTO> postulanteDTOS = postulanteDao.postulanteList(params).stream().map(PostulanteDTO::new).toList();
+        return postulanteDTOS;
+    }
     @Override
     public PostulanteDTO findPostulanteById(Long id) {
         Postulante postulante = postulanteRepository.findById(id).orElse(null);

@@ -8,6 +8,7 @@ import com.example.proyectopostulantes.service.PostulanteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,11 +22,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/postulante")
 public class PostulanteController {
-
+    @Value("${app.storage.path}")
+    private String STORAGEPATH;
     @Autowired
     ColegioService colegioService;
 
@@ -34,8 +37,8 @@ public class PostulanteController {
     Logger LOGGER = LoggerFactory.getLogger(PostulanteController.class);
 
     @GetMapping("/list")
-    public String lista(Model model){
-        List<PostulanteDTO> postulanteDTOS = postulanteService.listarPostulantes();
+    public String lista(Model model, @RequestParam(name = "dni", required = false) String dni){
+        List<PostulanteDTO> postulanteDTOS = postulanteService.listarPostulantes(dni);
         model.addAttribute("postulantes", postulanteDTOS);
         return "listaPostulantes.html";
     }
@@ -93,10 +96,11 @@ public class PostulanteController {
             return "formularioPostulante.html";
         }
         if(!foto.isEmpty()){
-            String rootPath = "C://Users//Usuario//Pictures//temp//uploads";
+            String rootPath = STORAGEPATH;
             try {
                 byte[] bytes = foto.getBytes();
-                Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
+                LOGGER.info(String.valueOf(bytes.length));
+                Path rutaCompleta = Paths.get(rootPath + "//" + "[" + UUID.randomUUID().toString() + "]"+foto.getOriginalFilename());
                 Files.write(rutaCompleta, bytes);
                 postulante.setFoto(foto.getOriginalFilename());
             } catch (IOException e) {

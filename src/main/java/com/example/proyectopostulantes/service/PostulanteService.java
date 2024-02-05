@@ -9,6 +9,8 @@ public interface PostulanteService {
 
     public List<PostulanteDTO> listarPostulantes();
 
+    List<PostulanteDTO> listarPostulantes(String params);
+
     public PostulanteDTO findPostulanteById(Long id);
 
     public void deshabilitarPostulante(Long id);
